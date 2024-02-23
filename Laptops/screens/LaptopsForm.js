@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Alert } from "react-native"
 import { Input, Button } from "@rneui/base"
 import { useState } from "react"
-import { saveLaptopRest, updateLaptopRest } from "../rest_client/Laptops"
+import { saveLaptopRest, updateLaptopRest, deleteLaptopRest } from "../rest_client/Laptops"
 
 export const LaptopsForm = ({ navigation, route }) => {
     let laptopRetrieved = route.params.laptopParam;
@@ -19,8 +19,8 @@ export const LaptopsForm = ({ navigation, route }) => {
 
     console.log(route.params.laptopParam);
 
-    const showMessage = () => {
-        Alert.alert("CONFIRMACIÓN", isNew ? "Laptop creada!" : "Laptop actualizada!");
+    const showMessage = (mesagge) => {
+        Alert.alert("CONFIRMACIÓN", mesagge);
         navigation.goBack();
     }
 
@@ -49,6 +49,25 @@ export const LaptopsForm = ({ navigation, route }) => {
             },
             showMessage
         );
+    }
+
+    const confirmDelete = () => {
+        Alert.alert(
+            "CONFIRMACIÓN",
+            "¿Está seguro que quiere eliminar?",
+            [
+                { text: "CANCELAR" },
+                {
+                    text: "SI",
+                    onPress:deleteLaptop
+                }
+            ]);
+    }
+
+    const deleteLaptop=()=>{
+        deleteLaptopRest({
+            id:laptopRetrieved.id
+        },showMessage);
     }
 
     <Input />
@@ -85,6 +104,12 @@ export const LaptopsForm = ({ navigation, route }) => {
             title="GUARDAR"
             onPress={isNew ? createLaptop : updateLaptop}
         />
+        {
+            isNew ? <View></View> : <Button
+                title="ELIMINAR"
+                onPress={confirmDelete}
+            />
+        }
     </View>
 }
 

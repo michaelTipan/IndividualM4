@@ -33,7 +33,7 @@ export const saveLaptopRest=(laptop,fnShowMessage)=>{
     )
     .then(response=>response.json())
     .then(body=>{
-        fnShowMessage();
+        fnShowMessage("Laptop creada!");
         console.log(body);
     })
 }
@@ -57,7 +57,21 @@ export const updateLaptopRest=(laptop,fnShowMessage)=>{
     )
     .then(response=>response.json())
     .then(body=>{
-        fnShowMessage();
+        fnShowMessage("Laptop actualizada!");
+        console.log(body);
+    })
+}
+
+export const deleteLaptopRest=(laptop,fnShowMessage)=>{
+    const config={
+        method: "DELETE",
+    }
+    fetch(
+        URL+"laptops/"+laptop.id, config
+    )
+    .then(response=>response.json())
+    .then(body=>{
+        fnShowMessage("Laptop eliminada!");
         console.log(body);
     })
 }
