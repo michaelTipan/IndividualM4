@@ -14,3 +14,25 @@ export const getAllContacts=(fnRefreshList)=>{
         }
     )
 }
+
+export const saveContactRest=(contact,fnShowMessage)=>{
+    const config={
+        method: "POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            nombre:contact.name,
+            apellido:contact.surname,
+            celular:contact.phoneNumber
+        })
+    }
+    fetch(
+        URL+"contactos", config
+    )
+    .then(response=>response.json())
+    .then(body=>{
+        fnShowMessage();
+        console.log(body);
+    })
+}
